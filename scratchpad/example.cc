@@ -1,3 +1,5 @@
+// taken from:
+// http://code.google.com/apis/v8/embed.html
 #include <v8.h>
 
 using namespace v8;
