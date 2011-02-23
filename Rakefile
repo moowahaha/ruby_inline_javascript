@@ -16,6 +16,13 @@ $hoe = Hoe.spec 'inline_javascript' do
   self.rubyforge_name       = self.name # TODO this is default value
   # self.extra_deps         = [['activesupport','>= 2.0.2']]
 
+  self.clean_globs = [
+    'ext/inline_javascript/Makefile',
+    'ext/inline_javascript/*.{o,so,bundle,a,log,dll}',
+    'ext/inline_javascript/conftest.dSYM'
+  ]
+
+  self.spec_extras = { :extensions => ["ext/inline_javascript/extconf.rb"] }
 end
 
 require 'newgem/tasks'
