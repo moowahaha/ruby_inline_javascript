@@ -1,10 +1,8 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require File.dirname(__FILE__) + "/../ext/inline_javascript_v8_wrapper/inline_javascript_v8_wrapper"
 
-$:.unshift File.dirname(__FILE__) + "/../ext/inline_javascript_v8_wrapper"
-require "inline_javascript_v8_wrapper.so"
-
-describe "inline_javascript_v8_wrapper" do
-  it "should do nothing" do
-    true.should == true
+describe InlineJavaScriptV8Wrapper do
+  it "should blah" do
+    wrapper = InlineJavaScriptV8Wrapper.new('function blah() {"hello"}')
+    wrapper.execute('blah()').should == "hello"
   end
 end

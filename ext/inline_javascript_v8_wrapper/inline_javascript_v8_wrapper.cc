@@ -1,17 +1,40 @@
 #include "ruby.h"
+#include <v8.h>
 
-using namespace std;
+using namespace v8;
 
 VALUE rb_cInlineJavaScriptV8Wrapper = Qnil;
 
 VALUE rb_initialize_javascript_function(VALUE self, VALUE javascript_string) {
-    printf("method: %s\n", StringValueCStr(javascript_string));
+
+    Persistent<Context> context = Context::New();
+    Context::Scope context_scope(context);
+    HandleScope handle_scope;
+
+    Handle<String> func_source = String::New(StringValueCStr(javascript_string));
+    Handle<Script> func = Script::Compile(func_source);
+    Handle<Value> func_result = func->Run();
 
     return self;
 }
 
 VALUE rb_execute_javascript(VALUE self, VALUE javascript_string) {
-    printf("execute: %s\n", StringValueCStr(javascript_string));
+    VALUE javascript_result;
+
+    Handle<String> source = String::New(StringValueCStr(javascript_string));
+    Handle<Script> script = Script::Compile(source);
+
+    TryCatch trycatch;
+    Handle<Value> result = script->Run();
+
+    // Dispose the persistent context.
+    //context.Dispose();
+
+    // Convert the result to an ASCII string and print it.
+    String::AsciiValue ascii(result);
+    javascript_result = rb_str_new2(*ascii);
+
+    return javascript_result;
 }
 
 extern "C" void Init_inline_javascript_v8_wrapper() {
