@@ -5,11 +5,11 @@ using namespace v8;
 
 VALUE rb_cInlineJavaScriptV8Wrapper = Qnil;
 
-VALUE rb_initialize_javascript_function(VALUE self, VALUE javascript_string) {
+Persistent<Context> context = Context::New();
+Context::Scope context_scope(context);
+HandleScope handle_scope;
 
-    Persistent<Context> context = Context::New();
-    Context::Scope context_scope(context);
-    HandleScope handle_scope;
+VALUE rb_initialize_javascript_function(VALUE self, VALUE javascript_string) {
 
     Handle<String> func_source = String::New(StringValueCStr(javascript_string));
     Handle<Script> func = Script::Compile(func_source);
