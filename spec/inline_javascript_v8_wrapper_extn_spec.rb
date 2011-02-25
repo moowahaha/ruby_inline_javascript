@@ -12,7 +12,7 @@ describe InlineJavaScriptV8Wrapper do
       InlineJavaScriptV8Wrapper.new('function i_should_have_a_short_life() {}')
 
       wrapper = InlineJavaScriptV8Wrapper.new('function i_am_wasted_javascript () {}')
-      -> { wrapper.execute('i_should_have_a_short_life()') }.should raise_error(InlineJavaScriptV8Wrapper::SyntaxError)
+      -> { wrapper.execute('i_should_have_a_short_life()') }.should raise_error(SyntaxError)
     end
   end
 

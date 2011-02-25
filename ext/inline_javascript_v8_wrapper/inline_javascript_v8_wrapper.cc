@@ -27,11 +27,19 @@ VALUE rb_execute_javascript(VALUE self, VALUE javascript_string) {
     TryCatch trycatch;
     Handle<Value> result = script->Run();
 
+    if (result.IsEmpty()) {
+        Handle<Value> exception = trycatch.Exception();
+        String::AsciiValue exception_str(exception);
+        rb_raise(rb_eSyntaxError, "Cannot parse JavaScript: %s", *exception_str);
+    }
+
     // Dispose the persistent context.
     //context.Dispose();
 
     // Convert the result to an ASCII string and print it.
+
     String::AsciiValue ascii(result);
+
     javascript_result = rb_str_new2(*ascii);
 
     return javascript_result;
