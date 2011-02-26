@@ -11,10 +11,6 @@ class V8Context {
         this->context = Context::New();
     }
 
-    ~V8Context() {
-        this->dispose();
-    }
-
     void dispose() {
         this->context.Dispose();
     }
@@ -23,6 +19,7 @@ class V8Context {
         VALUE javascript_result;
 
         Context::Scope context_scope(this->context);
+
         HandleScope handle_scope;
 
         Handle<String> source = String::New(StringValueCStr(javascript_string));
@@ -53,24 +50,25 @@ class V8Context {
 
 VALUE rb_cInlineJavaScriptV8Wrapper = Qnil;
 
-V8Context context;
+VALUE rb_execute_javascript(VALUE self, VALUE javascript_string) {
+    V8Context *this_context;
+    Data_Get_Struct(self, V8Context, this_context);
+    return this_context->execute(javascript_string);
 
-VALUE rb_initialize_javascript_function(VALUE self) {
-    return self;
 }
 
-VALUE rb_execute_javascript(VALUE self, VALUE javascript_string) {
-//    V8Context *context;
-//    Data_Get_Struct(self, V8Context, context);
-    return context.execute(javascript_string);
+void dispose_of_context(V8Context *this_context) {
+    this_context->dispose();
+}
 
+VALUE allocate_context(VALUE klass) {
+    V8Context *this_context = new V8Context();
+    return Data_Wrap_Struct(klass, 0, dispose_of_context, this_context);
 }
 
 extern "C" void Init_inline_javascript_v8_wrapper() {
 	rb_cInlineJavaScriptV8Wrapper = rb_define_class("InlineJavaScriptV8Wrapper", rb_cObject);
-
-	rb_define_method(rb_cInlineJavaScriptV8Wrapper, "initialize", (VALUE(*)(...))&rb_initialize_javascript_function, 0);
 	rb_define_method(rb_cInlineJavaScriptV8Wrapper, "execute", (VALUE(*)(...))&rb_execute_javascript, 1);
-
+    rb_define_alloc_func(rb_cInlineJavaScriptV8Wrapper, allocate_context);
 }
 
