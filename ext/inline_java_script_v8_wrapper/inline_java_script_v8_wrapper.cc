@@ -89,10 +89,10 @@ VALUE allocate_context(VALUE klass) {
 }
 
 extern "C" void Init_inline_java_script_v8_wrapper() {
-	VALUE rb_cInlineJavaScript = rb_define_class("InlineJavaScript", rb_cObject);
-	rb_cInlineJavaScriptV8Wrapper = rb_define_class_under(rb_cInlineJavaScript, "V8Wrapper", rb_cObject);
+    VALUE rb_cInlineJavaScript = rb_define_class("InlineJavaScript", rb_cObject);
+    rb_cInlineJavaScriptV8Wrapper = rb_define_class_under(rb_cInlineJavaScript, "V8Wrapper", rb_cObject);
 	
-	rb_define_method(rb_cInlineJavaScriptV8Wrapper, "execute", (VALUE(*)(...))&rb_execute_java_script, 1);
+    rb_define_method(rb_cInlineJavaScriptV8Wrapper, "execute", (VALUE(*)(...))&rb_execute_java_script, 1);
     rb_define_alloc_func(rb_cInlineJavaScriptV8Wrapper, allocate_context);
 }
 
