@@ -1,1 +1,1 @@
-require 'inline_javascript'
+require 'inline_java_script'

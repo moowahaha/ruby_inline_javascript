@@ -72,7 +72,7 @@ class V8Context {
 
 VALUE rb_cInlineJavaScriptV8Wrapper = Qnil;
 
-VALUE rb_execute_javascript(VALUE self, VALUE javascript_string) {
+VALUE rb_execute_java_script(VALUE self, VALUE javascript_string) {
     V8Context *this_context;
     Data_Get_Struct(self, V8Context, this_context);
     return this_context->execute(javascript_string);
@@ -88,9 +88,11 @@ VALUE allocate_context(VALUE klass) {
     return Data_Wrap_Struct(klass, 0, dispose_of_context, this_context);
 }
 
-extern "C" void Init_inline_javascript_v8_wrapper() {
-	rb_cInlineJavaScriptV8Wrapper = rb_define_class("InlineJavaScriptV8Wrapper", rb_cObject);
-	rb_define_method(rb_cInlineJavaScriptV8Wrapper, "execute", (VALUE(*)(...))&rb_execute_javascript, 1);
+extern "C" void Init_inline_java_script_v8_wrapper() {
+	VALUE rb_cInlineJavaScript = rb_define_class("InlineJavaScript", rb_cObject);
+	rb_cInlineJavaScriptV8Wrapper = rb_define_class_under(rb_cInlineJavaScript, "V8Wrapper", rb_cObject);
+	
+	rb_define_method(rb_cInlineJavaScriptV8Wrapper, "execute", (VALUE(*)(...))&rb_execute_java_script, 1);
     rb_define_alloc_func(rb_cInlineJavaScriptV8Wrapper, allocate_context);
 }
 
