@@ -6,7 +6,8 @@ module Inline
 
     def initialize javascript_functions
       require File.join(File.dirname(__FILE__), %w{.. ext inline_javascript_v8_wrapper inline_javascript_v8_wrapper})
-      @wrapper = InlineJavaScriptV8Wrapper.new(javascript_functions)
+      @wrapper = InlineJavaScriptV8Wrapper.new
+      @wrapper.execute(javascript_functions)
     end
 
     def method_missing(method, *arguments, &unused_block)
