@@ -11,6 +11,10 @@ class V8Context {
         this->context = Context::New();
     }
 
+    ~V8Context() {
+        this->dispose();
+    }
+
     void dispose() {
         this->context.Dispose();
     }

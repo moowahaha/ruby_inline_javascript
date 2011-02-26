@@ -2,10 +2,6 @@ require File.dirname(__FILE__) + "/../ext/inline_javascript_v8_wrapper/inline_ja
 
 describe InlineJavaScriptV8Wrapper do
 
-  before :all do
-    compile_wrapper
-  end
-
   it "should execute some javascript" do
     wrapper = InlineJavaScriptV8Wrapper.new
     wrapper.execute('function blah() { return "hello"}')
