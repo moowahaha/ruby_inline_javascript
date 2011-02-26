@@ -20,7 +20,7 @@ InlineJavaScript::V8Wrapper.
 * Only tested on Ruby 1.9.2 so far.
 
 * InlineJavaScript::V8Wrapper only currently supports functions returning basic scalars,
- that it then turns into strings.
+  that it then turns into strings.
 
 
 == SYNOPSIS:
