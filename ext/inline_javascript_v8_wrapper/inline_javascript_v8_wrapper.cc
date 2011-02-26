@@ -28,15 +28,18 @@ class V8Context {
 
         Handle<String> source = String::New(StringValueCStr(javascript_string));
 
+        TryCatch try_catch;
+
         Handle<Script> javascript_functions = Script::Compile(source);
+
+        if (javascript_functions.IsEmpty()) {
+            throw_javascript_exception(&try_catch);
+        }
+
         Handle<Value> result = javascript_functions->Run();
 
-        TryCatch trycatch;
-
         if (result.IsEmpty()) {
-            Handle<Value> exception = trycatch.Exception();
-            String::AsciiValue exception_str(exception);
-            rb_raise(rb_eSyntaxError, "Cannot parse JavaScript: %s", *exception_str);
+            throw_javascript_exception(&try_catch);
         }
 
         v8::String::Utf8Value str(result);
@@ -49,6 +52,21 @@ class V8Context {
     private:
 
     Persistent<Context> context;
+
+    void throw_javascript_exception(TryCatch *try_catch) {
+        Handle<Value> exception = try_catch->Exception();
+        String::AsciiValue exception_str(exception);
+
+        Handle<Message> message = try_catch->Message();
+        if (message.IsEmpty()) {
+            rb_raise(rb_eSyntaxError, "JavaScript error: %s", *exception_str);
+        }
+
+        int line = message->GetLineNumber();
+        String::Utf8Value sourceline(message->GetSourceLine());
+
+        rb_raise(rb_eSyntaxError, "JavaScript error: %s on line %d:\n%s", *exception_str, line, *sourceline);
+    }
 
 };
 
