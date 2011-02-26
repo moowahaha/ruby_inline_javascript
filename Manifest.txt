@@ -10,8 +10,7 @@ Rakefile
 ext/inline_java_script_v8_wrapper/extconf.rb
 ext/inline_java_script_v8_wrapper/inline_java_script_v8_wrapper.cc
 lib/inline_java_script.rb
-scratchpad/example.cc
-scratchpad/run.sh
+lib/inline_java_script/v8_wrapper.rb
 script/console
 script/destroy
 script/generate

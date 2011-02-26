@@ -1,6 +1,6 @@
 = inline_javascript
 
-* http://github.com/#{github_username}/#{project_name}
+* http://github.com/moowahaha/ruby_inline_javascript
 
 == DESCRIPTION:
 

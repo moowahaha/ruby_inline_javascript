@@ -1,0 +1,1 @@
+require File.join(File.dirname(__FILE__), %w{.. .. ext inline_java_script_v8_wrapper inline_java_script_v8_wrapper})
