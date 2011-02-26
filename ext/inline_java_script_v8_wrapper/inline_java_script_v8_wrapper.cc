@@ -42,7 +42,7 @@ class V8Context {
             throw_javascript_exception(&try_catch);
         }
 
-        v8::String::Utf8Value str(result);
+        String::Utf8Value str(result);
 
         javascript_result = rb_str_new2(*str);
 

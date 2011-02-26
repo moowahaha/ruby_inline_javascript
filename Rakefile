@@ -22,7 +22,7 @@ $hoe = Hoe.spec 'inline_java_script' do
     'ext/inline_java_script_v8_wrapper/conftest.dSYM'
   ]
 
-  self.spec_extras = { :extensions => ["ext/inline_java_script/extconf.rb"] }
+  self.spec_extras = { :extensions => ["ext/inline_java_script_v8_wrapper/extconf.rb"] }
 end
 
 task :default do
