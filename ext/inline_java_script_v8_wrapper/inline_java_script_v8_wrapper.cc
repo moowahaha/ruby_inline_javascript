@@ -81,6 +81,7 @@ VALUE rb_execute_java_script(VALUE self, VALUE javascript_string) {
 
 void dispose_of_context(V8Context *this_context) {
     this_context->dispose();
+    free(this_context);
 }
 
 VALUE allocate_context(VALUE klass) {
