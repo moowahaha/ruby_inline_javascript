@@ -17,8 +17,6 @@ InlineJavaScript::V8Wrapper.
 * InlineJavascript supports JavaScript return values of type String, Integer, Hash, Array or any
   other type supported by JavaScript's "JSON.stringify()" method.
 
-* Only tested on Ruby 1.9.2 so far.
-
 * InlineJavaScript::V8Wrapper only currently supports functions returning basic scalars,
   that it then turns into strings.
 
