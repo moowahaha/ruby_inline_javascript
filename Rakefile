@@ -6,7 +6,7 @@ require './lib/inline_java_script'
 
 Hoe.plugin :newgem
 
-$hoe = Hoe.spec 'inline_java_script' do
+$hoe = Hoe.spec 'inline_javascript' do
   self.developer 'Stephen Hardisty', 'moowahaha@hotmail.com'
   self.post_install_message = 'PostInstall.txt'
   self.rubyforge_name       = self.name

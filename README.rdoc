@@ -14,7 +14,7 @@ InlineJavaScript::V8Wrapper.
   String, Hash, Array or any other class that supports the ".to_json" method (as provided
   by the "json" gem).
 
-* InlineJavascript supports JavaScript return values of type String, Integer, Hash, Array or any
+* InlineJavaScript supports JavaScript return values of type String, Integer, Hash, Array or any
   other type supported by JavaScript's "JSON.stringify()" method.
 
 * InlineJavaScript::V8Wrapper only currently supports functions returning basic scalars,
