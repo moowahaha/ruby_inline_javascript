@@ -25,6 +25,8 @@ InlineJavaScript::V8Wrapper.
 
 To call a JavaScript function as if it was Ruby:
 
+    require 'inline_java_script'
+
     js = InlineJavaScript.new('function my_add (a, b) { return a+b}')
     js.my_add(1, 2) #=> 3
 
@@ -34,6 +36,8 @@ Using more complex types:
     js.my_concat(['hello', 'world']) #=> {"concat_string" => "hello world"}
 
 To call the V8 engine directly (no smarts):
+
+    require 'inline_java_script/v8_wrapper'
 
     wrapper = InlineJavaScript::V8Wrapper.new
     wrapper.execute('1 + 2') #=> "3"

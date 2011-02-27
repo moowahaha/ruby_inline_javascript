@@ -4,6 +4,8 @@ require 'json'
 #
 #To call a JavaScript function as if it was Ruby:
 #
+#    require 'inline_java_script'
+#
 #    js = InlineJavaScript.new('function my_add (a, b) { return a+b}')
 #    js.my_add(1, 2) #=> 3
 #

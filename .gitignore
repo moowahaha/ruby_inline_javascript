@@ -1,5 +1,6 @@
 *.bundle
 *.dll
+*.gem
 *.gemspec
 *.log
 *.o

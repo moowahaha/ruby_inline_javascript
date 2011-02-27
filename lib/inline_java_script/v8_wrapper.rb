@@ -3,6 +3,8 @@ require File.join(File.dirname(__FILE__), %w{.. .. ext inline_java_script_v8_wra
 #== SYNOPSIS:
 #To call the V8 engine:
 #
+#    require 'inline_java_script/v8_wrapper'
+#
 #    wrapper = InlineJavaScript::V8Wrapper.new
 #    wrapper.execute('1 + 2') #=> "3"
 #
