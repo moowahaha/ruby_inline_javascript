@@ -25,15 +25,15 @@ InlineJavaScript::V8Wrapper.
 
 == SYNOPSIS:
 
-To call a JavaScript as if it was Ruby:
+To call a JavaScript function as if it was Ruby:
 
     js = InlineJavaScript.new('function my_add (a, b) { return a+b}')
     js.my_add(1, 2) #=> 3
 
 Using more complex types:
 
-    js = InlineJavaScript.new('function my_concat (a) { return {string: a[0] + " " + a[1]} }')
-    js.my_concat(['hello', 'world']) #=> {"string" => "hello world"}
+    js = InlineJavaScript.new('function my_concat (a) { return {concat_string: a[0] + " " + a[1]} }')
+    js.my_concat(['hello', 'world']) #=> {"concat_string" => "hello world"}
 
 To call the V8 engine directly (no smarts):
 
@@ -53,8 +53,8 @@ An instance of the V8Wrapper maintains state:
 == REQUIREMENTS:
 
 * Google's libv8. I installed this using Homebrew (https://github.com/mxcl/homebrew)
-  by running "brew install v8" on OSX. It is also available for other operating systems
-  through various means (e.g. yum install libv8-dev).
+  by running "brew install v8" on OSX. libv8 is also available for other operating
+  systems through various means (e.g. yum install libv8-dev).
 
 
 == INSTALL:
