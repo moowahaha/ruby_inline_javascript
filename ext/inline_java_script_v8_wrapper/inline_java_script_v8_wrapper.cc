@@ -20,8 +20,6 @@ class V8Context {
     }
 
     VALUE execute(VALUE javascript_string) {
-        VALUE javascript_result;
-
         Context::Scope context_scope(this->context);
 
         HandleScope handle_scope;
@@ -38,20 +36,26 @@ class V8Context {
 
         Handle<Value> result = javascript_functions->Run();
 
-        if (result.IsEmpty()) {
-            throw_javascript_exception(&try_catch);
-        }
-
-        String::Utf8Value str(result);
-
-        javascript_result = rb_str_new2(*str);
-
-        return javascript_result;
+        return this->rb_result(result, &try_catch);
     }
 
     private:
 
     Persistent<Context> context;
+
+    VALUE rb_result(Handle<Value> result, TryCatch *try_catch) {
+        if (result.IsEmpty()) {
+            throw_javascript_exception(try_catch);
+        }
+
+        if (result->IsUndefined()) {
+            return Qnil;
+        }
+
+        String::Utf8Value str(result);
+
+        return rb_str_new2(*str);
+    }
 
     void throw_javascript_exception(TryCatch *try_catch) {
         Handle<Value> exception = try_catch->Exception();

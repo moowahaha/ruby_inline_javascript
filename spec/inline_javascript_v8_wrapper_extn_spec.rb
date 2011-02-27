@@ -16,4 +16,12 @@ describe InlineJavaScript::V8Wrapper do
     -> { wrapper.execute('i_should_have_a_short_life()') }.should raise_error(SyntaxError)
   end
 
+  it "should return nil when nothing is returned" do
+    InlineJavaScript::V8Wrapper.new.execute('var x = 2').should be_nil
+  end
+
+  it "should throw exceptions with syntax errors" do
+    -> { InlineJavaScript::V8Wrapper.new.execute('sdfsdf') }.should raise_error(SyntaxError)
+  end
+
 end

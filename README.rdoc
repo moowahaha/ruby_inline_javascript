@@ -27,18 +27,35 @@ InlineJavaScript::V8Wrapper.
 
 To call a JavaScript as if it was Ruby:
 
-    js = InlineJavaScript.new('function my_add (a, b) { return {equals: a+b}}')
-    js.my_add(1, 2) #=> {'equals' => 3}
+    js = InlineJavaScript.new('function my_add (a, b) { return a+b}')
+    js.my_add(1, 2) #=> 3
+
+Using more complex types:
+
+    js = InlineJavaScript.new('function my_concat (a) { return {string: a[0] + " " + a[1]} }')
+    js.my_concat(['hello', 'world']) #=> {"string" => "hello world"}
 
 To call the V8 engine directly (no smarts):
 
     wrapper = InlineJavaScript::V8Wrapper.new
     wrapper.execute('1 + 2') #=> "3"
 
+An instance of the V8Wrapper maintains state:
+
+    wrapper = InlineJavaScript::V8Wrapper.new
+    wrapper.execute('var e = "monster"')
+    wrapper.execute('e') #=> "monster"
+
+    # ... But I cannot access another instance...
+    InlineJavaScript::V8Wrapper.new.execute('e') #=> SyntaxError
+
+
 == REQUIREMENTS:
 
 * Google's libv8. I installed this using Homebrew (https://github.com/mxcl/homebrew)
-  by running "brew install v8".
+  by running "brew install v8" on OSX. It is also available for other operating systems
+  through various means (e.g. yum install libv8-dev).
+
 
 == INSTALL:
 
