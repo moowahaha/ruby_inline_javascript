@@ -9,6 +9,11 @@ typedef struct {
   JSObject  *global;
 } engine_struct;
 
+void printError(JSContext *cx, const char *message, JSErrorReport *report) {
+  rb_raise(rb_eSyntaxError, "JSERROR: %d: %s\n",report->lineno, message);
+}
+
+
 VALUE rb_execute_java_script(VALUE self, VALUE javascript_string) {
   engine_struct *engine;
   Data_Get_Struct(self, engine_struct, engine);
@@ -19,15 +24,21 @@ VALUE rb_execute_java_script(VALUE self, VALUE javascript_string) {
 
   jsval rval;
 
+  JS_SetErrorReporter(engine->context, printError);
+
+    printf("AAAAAAAAA\n");
+
   if (!JS_EvaluateScript(engine->context, engine->global, script, strlen(script),
 			 "script", 1, &rval))
     rb_raise(rb_eSyntaxError, "JavaScript error 3");
+
+    printf("BBBBBBBBBB\n");
 
   /*replace with something meaningful  like turning it into a string*/
 //  if (!(JSVAL_IS_INT(rval)&&(JSVAL_TO_INT(rval)==100)))
 //    return EXIT_FAILURE;
 
-    return rb_str_new2(JS_GetStringBytes(JSVAL_TO_STRING(rval)));
+//    return rb_str_new2(JS_GetStringBytes(JSVAL_TO_STRING(rval)));
 }
 
 VALUE rb_cInlineJavaScriptSpiderMonkeyWrapper = Qnil;
@@ -42,7 +53,7 @@ void shutdown_engine(engine_struct *engine) {
 VALUE initialize_engine(VALUE klass) {
   engine_struct* engine = malloc(sizeof(engine_struct));
 
-  engine->runtime = JS_NewRuntime(1024L*1024L);
+  engine->runtime = JS_NewRuntime(8 * 1024L*1024L);
 
   if (    (!engine->runtime)
        || (!(engine->context = JS_NewContext (engine->runtime, 8192)))
