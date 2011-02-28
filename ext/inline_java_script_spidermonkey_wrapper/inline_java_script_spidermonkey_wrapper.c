@@ -21,7 +21,7 @@ VALUE rb_execute_java_script(VALUE self, VALUE javascript_string) {
 
   if (!JS_EvaluateScript(engine->context, engine->global, script, strlen(script),
 			 "script", 1, &rval))
-    return EXIT_FAILURE;
+    rb_raise(rb_eSyntaxError, "JavaScript error 3");
 
   /*replace with something meaningful  like turning it into a string*/
 //  if (!(JSVAL_IS_INT(rval)&&(JSVAL_TO_INT(rval)==100)))
@@ -48,11 +48,11 @@ VALUE initialize_engine(VALUE klass) {
        || (!(engine->context = JS_NewContext (engine->runtime, 8192)))
        || (!(engine->global  = JS_NewObject  (engine->context, NULL, NULL, NULL)))
      ) {
-    return EXIT_FAILURE;
+    rb_raise(rb_eSyntaxError, "JavaScript error 1");
   }
 
   if (!JS_InitStandardClasses(engine->context, engine->global)) {
-    return EXIT_FAILURE;
+    rb_raise(rb_eSyntaxError, "JavaScript error 2");
   }
 
   return Data_Wrap_Struct(klass, 0, shutdown_engine, engine);
