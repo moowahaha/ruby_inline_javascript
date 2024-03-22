@@ -10,5 +10,5 @@ end
 group :development do
   gem 'hoe', '>= 2.7.0'
   gem 'newgem', '>= 1.5.3'
-  gem 'rdoc', '>= 3.2'
+  gem 'rdoc', '>= 6.3.4.1'
 end
