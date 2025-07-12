@@ -8,7 +8,7 @@ group :test do
 end
 
 group :development do
-  gem 'hoe', '>= 2.7.0'
+  gem 'hoe', '>= 2.9.2'
   gem 'newgem', '>= 1.5.3'
   gem 'rdoc', '>= 3.2'
 end
